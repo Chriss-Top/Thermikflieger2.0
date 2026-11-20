@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thermikflieger 2.0</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- Startbildschirm -->
+  <div id="menu" class="screen show">
+    <div class="menu-inner">
+      <header>
+        <h1>Thermikflieger <span>2.0</span></h1>
+        <p class="tag">Windenstart, Thermik kurbeln, Hangaufwind nutzen – und sicher wieder landen.</p>
+      </header>
+      <div id="cards"></div>
+      <div class="menu-bottom">
+        <div class="controls">
+          <h3>Steuerung</h3>
+          <div class="keys">
+            <div><kbd>←</kbd><kbd>→</kbd> <kbd>A</kbd><kbd>D</kbd><span>Querlage / Kurve</span></div>
+            <div><kbd>↑</kbd> <kbd>W</kbd><span>Drücken (Fahrt aufnehmen)</span></div>
+            <div><kbd>↓</kbd> <kbd>S</kbd><span>Ziehen (Fahrt abbauen)</span></div>
+            <div><kbd>Leertaste</kbd><span>Bremsklappen · am Seil: ausklinken</span></div>
+            <div><kbd>P</kbd> <kbd>Esc</kbd><span>Pause</span> <kbd>M</kbd><span>Ton</span> <kbd>F</kbd><span>Vollbild</span></div>
+          </div>
+        </div>
+        <div class="tips">
+          <h3>Kurz erklärt</h3>
+          <ul>
+            <li>Unter Cumuluswolken, kreisenden Vögeln und aufsteigenden Pollen steht Thermik – kreisen und den Kern zentrieren.</li>
+            <li>Weht der Wind gegen einen Hang, trägt die Luvseite. Im Lee sinkt es.</li>
+            <li>Rote Marke am Fahrtmesser = Mindestfahrt. In der Kurve wandert sie nach oben.</li>
+            <li>Landen mit Gegenwind, flach und langsam – idealerweise auf einem Flugplatz.</li>
+          </ul>
+        </div>
+        <div class="start-col">
+          <label class="opt"><input type="checkbox" id="optSound" checked> Ton &amp; Variometer</label>
+          <label class="opt"><input type="checkbox" id="optInvert"> Höhenruder umkehren (↑ = ziehen)</label>
+          <button id="btnFull" class="ghost">⛶ Vollbild</button>
+          <button id="btnStart" class="primary">Start ⏎</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pause -->
+  <div id="pause" class="screen">
+    <div class="box">
+      <h2>Pause</h2>
+      <button id="btnResume" class="primary">Weiterfliegen ⏎</button>
+      <button id="btnRestart">Neu starten <small>R</small></button>
+      <button id="btnMenu">Hauptmenü <small>Q</small></button>
+    </div>
+  </div>
+
+  <!-- Ergebnis -->
+  <div id="result" class="screen">
+    <div class="box wide">
+      <div id="resIcon">🏆</div>
+      <h2 id="resTitle">Saubere Landung</h2>
+      <p id="resText"></p>
+      <div class="resplane">Flugzeug: <b id="resPlane"></b></div>
+      <table id="resTable"></table>
+      <div class="score"><span>Punkte</span><b id="resScore">0</b></div>
+      <div id="resRecord"></div>
+      <div class="row">
+        <button id="btnAgain" class="primary">Nochmal fliegen ⏎</button>
+        <button id="btnChange">Flugzeug wechseln</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/util.js"></script>
+  <script src="js/aircraft.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
