@@ -163,7 +163,7 @@
     if (inp.roll === 0 && A.selfLevel && Math.abs(this.phi) < 25 * DEG) pT -= this.phi * A.selfLevel * 2;
     this.p += (pT - this.p) * Math.min(1, dt / A.rollTau);
     // Thermik hebt den Flügel im stärkeren Aufwind
-    var sx = -Math.sin(this.psi), sz = Math.cos(this.psi), off = 22;
+    var sx = Math.sin(this.psi), sz = -Math.cos(this.psi), off = 22; // rechter Flügel
     var wR = world.thermalLiftAt(this.x + sx * off, this.y, this.z + sz * off, air.cb);
     var wL = world.thermalLiftAt(this.x - sx * off, this.y, this.z - sz * off, air.cb);
     this.thermalCue = wL - wR;
@@ -217,7 +217,8 @@
     if (V > A.vne) DW += (V - A.vne) * 0.004;
     var Vdot = -G * Math.sin(this.gamma) - G * DW;
     var gammaDot = (G / V) * (n * Math.cos(this.phi) - Math.cos(this.gamma));
-    var psiDot = G * n * Math.sin(this.phi) / (V * Math.max(0.2, Math.cos(this.gamma)));
+    // Rechtskurve (phi > 0) dreht den Kurs zur rechten Seite des Piloten
+    var psiDot = -G * n * Math.sin(this.phi) / (V * Math.max(0.2, Math.cos(this.gamma)));
     this.gammaDot = gammaDot;
     this.V = Math.max(7, V + Vdot * dt);
     this.gamma = clamp(this.gamma + gammaDot * dt, -85 * DEG, 80 * DEG);

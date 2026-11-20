@@ -245,7 +245,7 @@
     var cth = Math.cos(pose.theta), sth = Math.sin(pose.theta);
     var cph = Math.cos(pose.phi), sph = Math.sin(pose.phi);
     var f = [cth * cps, sth, cth * sps];
-    var r0 = [-sps, 0, cps];
+    var r0 = [sps, 0, -cps]; // rechte Seite des Piloten (bei Kurs 0 zum Betrachter hin)
     var u0 = [-sth * cps, cth, -sth * sps];
     var r = [r0[0] * cph - u0[0] * sph, r0[1] * cph - u0[1] * sph, r0[2] * cph - u0[2] * sph];
     var u = [u0[0] * cph + r0[0] * sph, u0[1] * cph + r0[1] * sph, u0[2] * cph + r0[2] * sph];

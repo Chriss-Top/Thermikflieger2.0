@@ -9,7 +9,7 @@ und Hangaufwind, bleibst so lange wie möglich oben – und landest am besten si
 
 | Taste | Funktion |
 |---|---|
-| `←` `→` / `A` `D` | Querlage, Kurve (Schräglage bleibt beim Loslassen stehen) |
+| `←` `→` / `A` `D` | Querlage, Kurve – immer aus Sicht des Piloten (Schräglage bleibt beim Loslassen stehen) |
 | `↑` / `W` | Drücken: Nase runter, Fahrt aufnehmen |
 | `↓` / `S` | Ziehen: Nase hoch, Fahrt abbauen |
 | `Leertaste` | Bremsklappen, beim Windenstart: früh ausklinken |
@@ -18,6 +18,8 @@ und Hangaufwind, bleibst so lange wie möglich oben – und landest am besten si
 | `F` | Vollbild |
 | `Enter` | Start / nochmal fliegen |
 
+Alle Tasten wirken aus Sicht des Piloten, egal in welche Richtung das Flugzeug gerade fliegt. `→` leitet
+also immer eine Rechtskurve ein: Fliegt das Flugzeug nach rechts, kommt es dabei auf den Betrachter zu.
 Das Höhenruder folgt der Steuerknüppel-Logik (↑ = drücken). Im Menü lässt es sich umkehren.
 
 ## Spielablauf
