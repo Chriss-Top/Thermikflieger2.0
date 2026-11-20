@@ -13,6 +13,7 @@ und Hangaufwind, bleibst so lange wie möglich oben – und landest am besten si
 | `↑` / `W` | Drücken: Nase runter, Fahrt aufnehmen |
 | `↓` / `S` | Ziehen: Nase hoch, Fahrt abbauen |
 | `Leertaste` | Bremsklappen, beim Windenstart: früh ausklinken |
+| `Enter` / `X` | beim Windenstart: Start überspringen und direkt in 300 m über Grund beginnen |
 | `P` / `Esc` | Pause (`R` neu starten, `Q` Hauptmenü) |
 | `M` | Ton / Variometer an und aus |
 | `F` | Vollbild |

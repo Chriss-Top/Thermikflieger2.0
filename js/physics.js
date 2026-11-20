@@ -127,6 +127,22 @@
     if (elev > 58 * DEG || this.x > L.winchX - 45) this.release(world, 'auto');
   };
 
+  // Windenstart überspringen: direkt in Ausklinkhöhe über dem Platzende beginnen
+  TF.SKIP_HEIGHT = 300;
+  P.skipLaunch = function (world) {
+    var L = this.launch;
+    if (!L || L.released) return;
+    this.x = L.winchX - 260;
+    this.z = 0;
+    this.y = world.hC(this.x) + TF.SKIP_HEIGHT;
+    this.theta = 0; this.phi = 0; this.p = 0;
+    this.V = this.A.vtrim;
+    L.phase = 'climb';
+    this.release(world, 'skip');
+    this.gamma = -1 * DEG;
+    this.V = this.A.vtrim;
+  };
+
   P.release = function (world, reason) {
     var L = this.launch;
     L.released = true;

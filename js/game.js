@@ -102,6 +102,7 @@
     if (this.state === 'play') {
       if (kl === 'p' || k === 'Escape') { this.setPaused(!this.paused); return; }
       if (this.paused && k === 'Enter') { this.setPaused(false); return; }
+      if (!this.paused && (k === 'Enter' || kl === 'x') && this.glider.mode === 'launch') { this.glider.skipLaunch(this.world); return; }
       if (this.paused && kl === 'r') { this.startFlight(); return; }
       if (this.paused && kl === 'q') { this.toMenu(); return; }
       return;
@@ -411,13 +412,16 @@
         var agl = Math.round(g.y - w.hC(g.x));
         var L = g.launch;
         this.airborne = true;
-        if (reason === 'weaklink') {
+        if (reason === 'skip') {
+          hud.toast('Windenstart übersprungen', 'Start in ' + agl + ' m über Grund · suche Thermik unter den Cumuluswolken', { big: true, dur: 4, color: '#bff5ff' });
+        } else if (reason === 'weaklink') {
           hud.toast('Sollbruchstelle gerissen!', 'Zu steil gezogen – Nase runter, Fahrt aufnehmen', { color: '#ffb02e', dur: 4.5 });
         } else {
           hud.toast('Ausgeklinkt in ' + agl + ' m', 'Startqualität ' + Math.round(L.quality * 100) + '% · suche Thermik unter den Cumuluswolken', { big: true, dur: 4.5, color: '#bff5ff' });
         }
         TF.Audio.release();
-        this.renderer.parachute = { x: g.x, y: g.y - 3, wx: L.winchX, wy: w.hC(L.winchX) + 2, cable: true };
+        if (reason !== 'skip') this.renderer.parachute = { x: g.x, y: g.y - 3, wx: L.winchX, wy: w.hC(L.winchX) + 2, cable: true };
+        else this.renderer.updateCamera(0.016, g, w, { snap: true });
         var self = this;
         setTimeout(function () {
           if (self.state === 'play' && self.glider === g) {

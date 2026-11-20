@@ -593,6 +593,6 @@
     }
     ctx.font = '600 ' + (12 * u) + 'px ' + FONT;
     ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    ctx.fillText('Leertaste: früh ausklinken', W / 2, Hh * 0.17 + 48 * u);
+    ctx.fillText(L.phase === 'climb' ? 'Leertaste: früh ausklinken  ·  Enter: Windenstart überspringen' : 'Enter: Windenstart überspringen', W / 2, Hh * 0.17 + 48 * u);
   };
 })();
