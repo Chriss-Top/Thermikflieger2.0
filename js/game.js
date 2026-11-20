@@ -41,7 +41,7 @@
   };
 
   Game.resize = function () {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+    var dpr = Math.min(window.devicePixelRatio || 1, this.maxDpr || 1.75);
     this.renderer.resize(window.innerWidth, window.innerHeight, dpr);
   };
 
@@ -279,7 +279,10 @@
     var dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
     this.fpsAcc += dt; this.fpsN++;
-    if (this.fpsAcc > 0.5) { this.fps = this.fpsN / this.fpsAcc; this.fpsAcc = 0; this.fpsN = 0; }
+    if (this.fpsAcc > 0.5) {
+      this.fps = this.fpsN / this.fpsAcc; this.fpsAcc = 0; this.fpsN = 0;
+      this.adaptQuality();
+    }
     try {
       if (this.state === 'menu') this.updateAttract(dt);
       else if (this.state === 'play' && !this.paused) this.updatePlay(dt);
@@ -289,6 +292,21 @@
       if (window.console) console.error(err);
     }
     requestAnimationFrame(this.frame.bind(this));
+  };
+
+  // Automatische Qualitätsanpassung bei dauerhaft niedriger Bildrate
+  Game.adaptQuality = function () {
+    if (document.hidden) return;
+    this.slowCount = this.fps < 45 ? (this.slowCount || 0) + 1 : 0;
+    if (this.slowCount < 6) return;
+    this.slowCount = 0;
+    var r = this.renderer;
+    if ((this.maxDpr || 1.75) > 1 && r.dpr > 1) {
+      this.maxDpr = 1;
+      this.resize();
+    } else if (r.quality > 0.5) {
+      r.quality = Math.max(0.5, r.quality - 0.25);
+    }
   };
 
   Game.updateAttract = function (dt) {

@@ -26,6 +26,7 @@
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { alpha: false });
     this.W = 800; this.H = 600; this.dpr = 1;
+    this.quality = 1;
     this.cam = { x: 0, y: 300, Vm: 600, s: 1, F: 350, D: D, eyeY: 0, eyeH: 0, py: 0, shakeX: 0, shakeY: 0, shake: 0, pos: [0, 0, -D] };
     this.levels = [];
     for (var j = 0; j < NZ; j++) {
@@ -429,7 +430,8 @@
     var c = this.cam;
     var kmid = c.F / ((zn + zf) * 0.5 + D);
     var sp = 10;
-    while (sp * kmid < 14) sp *= 2;
+    var minPx = 14 / this.quality;
+    while (sp * kmid < minPx) sp *= 2;
     this._bandLn = Ln; this._bandLf = Lf; this._bandZn = zn; this._bandZf = zf;
     var W = this.W;
     var halfW = (W * 0.5 + 40) / (c.F / (zf + D));
