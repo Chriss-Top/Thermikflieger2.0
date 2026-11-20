@@ -353,7 +353,7 @@
     var agl = y - this.hC(x);
     var relief = Math.max(35, this.hC(xs) - this.baseH(xs));
     var decay = Math.exp(-Math.max(0, agl) / (0.75 * relief + 70));
-    var w = wind * grad * 1.75 * decay;
+    var w = wind * grad * 2.3 * decay;
     if (w < 0) w *= 0.85;
     return w;
   };

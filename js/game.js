@@ -198,6 +198,7 @@
   };
 
   Game.showScreen = function (id) {
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     ['menu', 'pause', 'result'].forEach(function (s) { $(s).classList.toggle('show', s === id); });
   };
 
@@ -442,7 +443,7 @@
     var dir = Math.cos(g.psi) >= 0 ? 1 : -1;
     var nf = w.nextAirfield(g.x, dir);
     var agl = g.y - w.hC(g.x);
-    if (nf && nf.dist < 1800 && agl < 500 && !F.afShown[nf.af.idx]) {
+    if (nf && nf.dist < 1800 && agl < 500 && !F.afShown[nf.af.idx] && !(nf.af.start && this.flightTime < 120)) {
       F.afShown[nf.af.idx] = true;
       var wind = w.windAt(0, this.t);
       var ldir = Math.abs(wind) < 1 ? 'Wind schwach' : 'Gegenwind-Landung Richtung ' + (wind < 0 ? '→' : '←');
@@ -641,12 +642,12 @@
     else res.lines.push(['Bruch: Punkte halbiert', '×0,5']);
     res.score = score;
     var prev = this.scores[g.type];
-    res.record = !prev || score > prev.score;
+    res.record = score > 0 && (!prev || score > prev.score);
     if (res.record) {
       this.scores[g.type] = { score: score, time: Math.round(time), dist: Math.round(dist) };
       TF.store.set('tf2_scores', this.scores);
     }
-    res.best = this.scores[g.type];
+    res.best = this.scores[g.type] || { score: 0 };
     this.result = res;
     this.state = 'result';
     this.showResult(res, g);
@@ -681,7 +682,7 @@
     r.draw(st);
     var ctx = r.ctx;
     if (this.state === 'play') {
-      this.hud.update(dt);
+      if (!this.paused) this.hud.update(dt);
       this.hud.draw(ctx, r.W, r.H, {
         glider: this.glider, world: this.world, t: this.t, dpr: r.dpr,
         flightTime: this.flightTime, distance: this.distance, avgClimb: this.avgClimb,

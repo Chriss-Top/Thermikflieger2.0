@@ -90,7 +90,10 @@
     c.s = this.H / c.Vm;
     c.F = c.s * D;
     var aspect = this.W / this.H;
-    var look = clamp(g.vx * 1.9, -0.26 * c.Vm * aspect, 0.26 * c.Vm * aspect);
+    // geglättete Bahngeschwindigkeit: beim Kreisen pendelt die Kamera nicht mit
+    if (c.vxs === undefined || opts.snap) c.vxs = g.vx || 0;
+    c.vxs += ((g.vx || 0) - c.vxs) * Math.min(1, dt * 0.35);
+    var look = clamp(c.vxs * 1.9, -0.26 * c.Vm * aspect, 0.26 * c.Vm * aspect);
     if (opts.look !== undefined) look = opts.look;
     var tx = g.x + look;
     c.eyeH = 0.21 * c.Vm;
